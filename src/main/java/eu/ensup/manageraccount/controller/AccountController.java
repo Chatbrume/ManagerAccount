@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "comptes")
+@RequestMapping(path = "accounts")
 public class AccountController
 {
     @Autowired
@@ -20,16 +20,16 @@ public class AccountController
         return accountRepository.findAll();
     }
 
+    @PostMapping(path = "/")
+    public Account create(@RequestBody Account account)
+    {
+        return accountRepository.save(account);
+    }
+
     @GetMapping(path = "/{id}")
     public Account get(@PathVariable(name = "id") Integer id)
     {
         return accountRepository.findById(id).orElse(null);
-    }
-
-    @PostMapping(path = "/add")
-    public Account create(@RequestBody Account account)
-    {
-        return accountRepository.save(account);
     }
 
     @PutMapping(path = "/{id}")
