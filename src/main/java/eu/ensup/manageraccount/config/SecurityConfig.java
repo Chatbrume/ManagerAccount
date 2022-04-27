@@ -22,17 +22,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/accounts", "/accounts/**").hasAnyAuthority(Roles.USER.name(),Roles.ADMIN.name())
+                .antMatchers("/login", "/").permitAll()
+                /*.antMatchers("/accounts", "/accounts/**").hasAnyAuthority(Roles.USER.name(),Roles.ADMIN.name())
                 .antMatchers("/actuator", "/actuator/**", "/swagger/**").hasAuthority(Roles.ADMIN.name())
-                .anyRequest().authenticated()
-                .and()
+                .anyRequest().authenticated()*/
+                .anyRequest().permitAll()
+                /*.and()
                 .formLogin()
                 .defaultSuccessUrl("/accounts/", true)
                 .failureUrl("/login?error=true")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/login")*/;
     }
 
     @Bean
