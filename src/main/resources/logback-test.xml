@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property resource="application.properties"/>
+    <property resource="application-${spring.profiles.active}.properties"/>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logging.pattern.console}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${logging.level.root}">
+        <appender-ref ref="Console" level="${logging.level.console}"/>
+    </root>
+</configuration>

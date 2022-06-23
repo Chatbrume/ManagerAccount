@@ -36,8 +36,8 @@ public class AccountController
         return accountRepository.findById(id).orElse(null);
     }
 
-    @GetMapping(path = "/byType")
-    List<Account> findByType(@Param(value="type") TypeAccount type) {return accountRepository.findByType(type);}
+    @PostMapping(path = "/byType/{type}")
+    List<Account> findByType(@PathVariable(value="type") TypeAccount type) {return accountRepository.findByType(type);}
 
     @PutMapping(path = "/{id}")
     public Account update(@PathVariable(name = "id") Integer id, @RequestBody Account account)

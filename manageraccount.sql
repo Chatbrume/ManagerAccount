@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 07 avr. 2022 à 16:47
+-- Généré le : jeu. 23 juin 2022 à 10:40
 -- Version du serveur :  10.4.18-MariaDB
 -- Version de PHP : 8.0.3
 
@@ -11,11 +11,15 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Base de données : `manageraccount`
 --
-CREATE DATABASE IF NOT EXISTS `manageraccount` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `manageraccount`;
 
 -- --------------------------------------------------------
 
@@ -30,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `discount` double NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Tronquer la table avant d'insérer `account`
@@ -73,3 +77,7 @@ INSERT INTO `user` (`id`, `password`, `role`, `username`) VALUES
 (1, '$2a$10$1u/iLrtbfeGz4rBON4rrk.2oKoERc5YHp1mk5ZrbjdsRJx3Vfo4Yy', 'ADMIN', 'Admin'),
 (2, '$2a$10$SOLRryhqG6aunSFm7psljudG0cibSehaq.yzXvTE8/IiTbi2fbozy', 'USER', 'Toto');
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

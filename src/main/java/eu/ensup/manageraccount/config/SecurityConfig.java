@@ -1,6 +1,7 @@
 package eu.ensup.manageraccount.config;
 
 import eu.ensup.manageraccount.entity.Roles;
+import eu.ensup.manageraccount.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

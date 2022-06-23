@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property resource="application.properties"/>
+    <property resource="application-${spring.profiles.active}.properties"/>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logging.pattern.console}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="log-file-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.file.path}/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.file.path}/debug_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.file.path}/log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.file.path}/log_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${logging.level.root}">
+        <appender-ref ref="Console" level="${logging.level.console}"/>
+        <appender-ref ref="log-file-debug"/>
+        <appender-ref ref="log-file" level="INFO"/>
+    </root>
+</configuration>

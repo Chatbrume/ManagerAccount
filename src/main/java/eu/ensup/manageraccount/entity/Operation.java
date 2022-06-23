@@ -3,7 +3,6 @@ package eu.ensup.manageraccount.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 @Data
@@ -12,14 +11,18 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-public class Account
+public class Operation
 {
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private double discount;
-    private Date creationDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
+    private double value;
+    private String name;
+    private String description;
     @Enumerated(EnumType.STRING)
-    private TypeAccount type;
+    private TypeOperation typeOperation;
 }

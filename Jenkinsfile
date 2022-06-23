@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+    tools {
+        jdk 'JDK_1.8_221'
+        maven 'MavenInstallation'
+    }
+    environment {
+        String branchName = "main"
+        String repoUrl = "https://github.com/Chatbrume/ManagerAccount.git"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo 'Cloning the "'+branchName+'" branch from "'+repoUrl+'".'
+                    echo 'Start cloning the github repository...'
+                    git branch: branchName, url: repoUrl
+                    echo 'repository clone on branch master done.'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    echo 'Execute all test...'
+                    withMaven {
+                        bat "mvn clean test"
+                    }
+                    echo 'End of the execution'
+                }
+            }
+        }
+        stage('generate javadoc') {
+            steps {
+                script {
+                    echo 'Generation of the javadoc...'
+                    withMaven {
+                        bat "mvn javadoc:javadoc"
+                    }
+                    echo 'The javadoc have been generated !'
+                }
+            }
+
+        }
+        stage('confirmation email') {
+            steps {
+                mail to: 'nioche.amelie@gmail.com', subject: "[Jenkins] ManagerAccount", body: "ManagerAccount jenkins pipeline build finished with success"
+                echo 'An email have been send ! Consult your email adress !'
+            }
+        }
+    }
+}

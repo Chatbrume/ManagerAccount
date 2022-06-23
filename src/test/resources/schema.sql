@@ -1,0 +1,6 @@
+CREATE TABLE account(
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  creation_date DATE NULL,
+  discount REAL NOT NULL,
+  type VARCHAR(255) NULL
+);
