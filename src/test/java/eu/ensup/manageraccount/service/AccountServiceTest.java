@@ -111,6 +111,24 @@ public class AccountServiceTest
 
         // then
         verify(accountRepository).deleteById(2);
+        verify(accountRepository).findById(2);
+    }
+
+    @Test
+    public void deleteByIdFail()
+    {
+        Account account = new Account(2, 100.0, Date.valueOf("2020-01-10"), TypeAccount.SPARE);
+
+        // given
+        when(accountRepository.findById(2)).thenReturn(Optional.of(account));
+
+        // when
+        boolean found = accountService.deleteById(2);
+        MatcherAssert.assertThat(found, Matchers.equalTo(false));
+
+        // then
+        verify(accountRepository).deleteById(2);
+        verify(accountRepository).findById(2);
     }
 
     @Test
@@ -127,5 +145,23 @@ public class AccountServiceTest
 
         // then
         verify(accountRepository).delete(account);
+        verify(accountRepository).findById(2);
+    }
+
+    @Test
+    public void deleteFail()
+    {
+        Account account = new Account(2, 100.0, Date.valueOf("2020-01-10"), TypeAccount.SPARE);
+
+        // given
+        when(accountRepository.findById(2)).thenReturn(Optional.of(account));
+
+        // when
+        boolean found = accountService.delete(account);
+        MatcherAssert.assertThat(found, Matchers.equalTo(false));
+
+        // then
+        verify(accountRepository).delete(account);
+        verify(accountRepository).findById(2);
     }
 }

@@ -79,7 +79,7 @@ public class AccountRepositoryTest {
     public void testDeleteById()
     {
         Account account = new Account(3, 500, Date.valueOf("2022-04-08"), TypeAccount.CURRENT);
-        accountRepository.delete(account);
+        accountRepository.deleteById(account.getId());
         Account search = accountRepository.findById(account.getId()).orElse(null);
         assertThat(search, equalTo(null));
     }

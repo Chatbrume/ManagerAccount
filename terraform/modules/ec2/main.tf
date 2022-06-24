@@ -1,0 +1,47 @@
+resource "aws_instance" "ec2" {
+  ami                    = data.aws_ami.ami-ubuntu-bionic.id
+  instance_type          = var.instance_type
+  security_groups        = ["${var.sg_name}"]
+  availability_zone      = var.availability_zone
+  key_name               = "${var.author_name}"
+  tags = {
+    Name : "ec2-${var.author_name}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${var.public_ip} > ${var.main_directory}/ip.host"
+  }
+
+  provisioner "local-exec" {
+    command = "echo '[webserver]\n${self.public_ip}' > ${var.main_directory}/hosts.ini"
+  }
+
+  provisioner "local-exec" {
+    command = "ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -u ubuntu -b -i ${var.main_directory}/hosts.ini --private-key ${var.private_key_path} ${var.main_directory}/playbook.yml"
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file(var.private_key_path)
+      host        = self.public_ip
+    }
+
+    inline = [
+      "sudo apt update -y"
+    ]
+  }
+}
+
+data "aws_ami" "ami-ubuntu-bionic" {
+  most_recent = true
+  owners      = [var.aws_ami_owner]
+  tags = {
+    Name = "${var.author_name}-ec2-ami-t2-ubuntu-bionic"
+  }
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server*"]
+  }
+}
